@@ -29,14 +29,6 @@ public class PostController {
 
 	@Autowired
 	private PostRepository postRepository;
-//	@Autowired
-//	private CommentService commentService;
-//
-//	@Autowired
-//	private PostService postService;
-//
-//	@Autowired
-//	private UserService userService;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
@@ -51,15 +43,6 @@ public class PostController {
 	}
 
 	@PostMapping("/add")
-//	public Post add(@RequestParam String title, @RequestParam String userId, @RequestParam String description) {
-//		Post p = new Post();
-//		p.setTitle(title);
-//		p.setDescription(description);
-//		p.setPosted();
-//		p.setAuthor(userService.findByUserId(userId).get()); 
-//		postService.addPost(p);
-//		return p;
-//	}
 	public ResponseEntity<Post> addComment(@RequestBody Post p) {
 		Post post = postRepository.save(p);
 		post.setPosted();
