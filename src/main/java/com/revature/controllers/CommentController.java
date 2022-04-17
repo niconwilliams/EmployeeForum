@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.revature.models.Comment;
+import com.revature.models.Post;
 import com.revature.repos.CommentRepository;
 import com.revature.repos.PostRepository;
 
@@ -51,10 +52,10 @@ public class CommentController {
 	}
 
 	
-	@GetMapping("post/{id}")
-	public List<Comment> findByPost(@PathVariable Integer id) {
-		return postRepository.getById(id).getComments();
-	}
+//	@GetMapping("post/{id}")
+//	public List<Comment> findByPost(@PathVariable Integer id) {
+//		return postRepository.getById(id).getComments();
+//	}
 
 	@PostMapping("/add")
 	public ResponseEntity<Comment> addComment(@RequestBody Comment c) {
