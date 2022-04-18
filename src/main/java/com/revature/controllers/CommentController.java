@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.revature.models.Comment;
-import com.revature.models.Post;
+import com.revature.models.User;
 import com.revature.repos.CommentRepository;
-import com.revature.repos.PostRepository;
 
 @RestController
 @RequestMapping("/comments")
@@ -32,12 +30,6 @@ public class CommentController {
 
 	@Autowired
 	private CommentRepository commentRepository;
-	
-	@Autowired
-	private PostRepository postRepository;
-
-	@Autowired
-	private RestTemplate restTemplate;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
@@ -52,10 +44,10 @@ public class CommentController {
 	}
 
 	
-//	@GetMapping("post/{id}")
-//	public List<Comment> findByPost(@PathVariable Integer id) {
-//		return postRepository.getById(id).getComments();
-//	}
+	@GetMapping("user/{user}")
+	public List<Comment> findCommentByUser(@PathVariable User user) {
+		return commentRepository.findByAuthor(user);
+	}
 
 	@PostMapping("/add")
 	public ResponseEntity<Comment> addComment(@RequestBody Comment c) {

@@ -33,3 +33,7 @@ build/
 .vscode/
 .DS_Store
 p3data.mv.db
+*.db
+*.db
+*.db
+p3data.trace.db
