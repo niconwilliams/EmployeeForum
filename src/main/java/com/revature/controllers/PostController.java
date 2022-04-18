@@ -50,11 +50,8 @@ public class PostController {
 	
 	@PostMapping("/add")
 	public ResponseEntity<Post> addPost(@RequestBody Post p) {
-		Post post = postRepository.save(p);
-		post.setPosted();
-		post.setAuthor(p.getAuthor());
-		post.setComments(p.getComments());
-		return new ResponseEntity<>(post, HttpStatus.CREATED);
+		postRepository.save(p);
+		return new ResponseEntity<>(p, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")

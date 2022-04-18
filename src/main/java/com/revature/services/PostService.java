@@ -30,11 +30,7 @@ public class PostService {
 	}
 	
 	public Post addPost(Post p) {
-		Post post = new Post();
-		post.setPosted();
-		post.setAuthor(p.getAuthor());
-		post.setComments(p.getComments());
-		return postRepository.save(post);
+		return postRepository.save(p);
 	}
 	
 	public void updatePost(Post post) {

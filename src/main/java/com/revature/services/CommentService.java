@@ -33,11 +33,13 @@ public class CommentService {
 	}
 	
 	public Comment addComment(Comment c) {
-		Comment comment = new Comment();
-		comment.setCreated();
-		comment.setAuthor(c.getAuthor());
-		comment.setRoot(c.getRoot());
-		return commentRepository.save(comment);
+//		Comment comment = new Comment();
+//		comment.setcId(c.getcId());
+//		comment.setBody(c.getBody());
+//		comment.setCreated(c.getCreated());
+//		comment.setAuthor(c.getAuthor());
+//		comment.setRoot(c.getRoot());
+		return commentRepository.save(c);
 	}
 	
 	public Comment updateComment(Comment c) {
