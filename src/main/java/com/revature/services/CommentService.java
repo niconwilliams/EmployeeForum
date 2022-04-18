@@ -1,7 +1,6 @@
 package com.revature.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +24,8 @@ public class CommentService {
 		return commentRepository.findAll();
 	}
 	
-	public Optional<Comment> findCommentById(Integer id){
-		return commentRepository.findById(id);
+	public Comment findCommentById(Integer id){
+		return commentRepository.getById(id);
 	}
 	
 	public List<Comment> findCommentByUser(User user) {

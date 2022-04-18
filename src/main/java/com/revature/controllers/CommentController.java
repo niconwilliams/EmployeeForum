@@ -52,6 +52,7 @@ public class CommentController {
 	@PostMapping("/add")
 	public ResponseEntity<Comment> addComment(@RequestBody Comment c) {
 		Comment comment = commentRepository.save(c);
+		comment.setBody(c.getBody());
 		comment.setCreated();
 		comment.setAuthor(c.getAuthor());
 		comment.setRoot(c.getRoot());

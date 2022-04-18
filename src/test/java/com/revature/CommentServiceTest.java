@@ -49,12 +49,81 @@ public class CommentServiceTest {
 		Comment comment2 = new Comment(200, "This is a second comment", LocalDateTime.now(), userDoctor, post2);
 		comments.add(comment);
 		comments.add(comment2);
+		
 		when(commentRepository.findAll()).thenReturn(comments);
 		
 		List<Comment> commentsList = commentService.findAllComments();
 		
 		assertEquals(2, commentsList.size());
-		verify(commentRepository, times(1)).findAll();	
+		verify(commentRepository, times(1)).findAll();
+	}
+	
+	@Test 
+	public void getCommentsByIdTest() {
+		List<Comment> comments = new ArrayList<Comment>();
+		User userNurse = new User("1", "Name", "Last", "Email", new Role(1, "nurse"));
+		Post post = new Post(1, "This is the title", "This is a description", LocalDateTime.now(), comments, userNurse);
+		Comment comment = new Comment(100, "This is a comment", LocalDateTime.now(), userNurse, post);
+		comments.add(comment);
+
+		when(commentRepository.getById(100)).thenReturn(comment);
+		Comment c = commentService.findCommentById(100);
 		
+		assertEquals("This is a comment", c.getBody());
+	}
+	
+	@Test 
+	public void getCommentsByUser() {
+		List<Comment> comments = new ArrayList<Comment>();
+		User userDoctor = new User("2", "Name", "Last", "Email", new Role(2, "doctor"));
+		Post post = new Post(1, "This is the title", "This is a description", LocalDateTime.now(), comments, userDoctor);
+		Comment comment = new Comment(100, "This is a comment", LocalDateTime.now(), userDoctor, post);
+		Comment comment2 = new Comment(200, "This is a second comment", LocalDateTime.now(), userDoctor, post);
+		comments.add(comment);
+		comments.add(comment2);
+		
+		when(commentRepository.findByAuthor(userDoctor)).thenReturn(comments);
+		List<Comment> commentsList = commentService.findCommentByUser(userDoctor);
+		
+		assertEquals(2, commentsList.size());
+		verify(commentRepository, times(1)).findByAuthor(userDoctor);
+	}
+	
+	@Test
+	public void addCommentTest() {
+		List<Comment> comments = new ArrayList<Comment>();
+		User userDoctor = new User("1", "Name", "Last", "Email", new Role(1, "doctor"));
+		Post post = new Post(1, "This is the title", "This is a description", LocalDateTime.now(), comments, userDoctor);
+		Comment comment = new Comment(200, "This is a comment", LocalDateTime.now(), userDoctor, post);
+		comments.add(comment);
+
+		commentService.addComment(comment);
+		verify(commentRepository, times(1)).save(comment);
+	}
+	
+	@Test
+	public void updateCommentTest() {
+		List<Comment> comments = new ArrayList<Comment>();
+		User userDoctor = new User("1", "Name", "Last", "Email", new Role(1, "doctor"));
+		Post post = new Post(1, "This is the title", "This is a description", LocalDateTime.now(), comments, userDoctor);
+		Comment comment = new Comment(200, "This is a comment", LocalDateTime.now(), userDoctor, post);
+		comments.add(comment);
+
+		when(commentService.findCommentById(200)).thenReturn(comment);
+		commentService.updateComment(comment);
+		verify(commentRepository, times(1)).save(comment);
+	}
+	
+	@Test
+	public void deleteCommentTest() {
+		List<Comment> comments = new ArrayList<Comment>();
+		User userDoctor = new User("1", "Name", "Last", "Email", new Role(1, "doctor"));
+		Post post = new Post(1, "This is the title", "This is a description", LocalDateTime.now(), comments, userDoctor);
+		Comment comment = new Comment(200, "This is a comment", LocalDateTime.now(), userDoctor, post);
+		comments.add(comment);
+
+		when(commentService.findCommentById(200)).thenReturn(comment);
+		commentService.deleteComment(comment);
+		verify(commentRepository, times(1)).delete(comment);
 	}
 }
