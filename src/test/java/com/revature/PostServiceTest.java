@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
@@ -21,9 +20,7 @@ import com.revature.models.Comment;
 import com.revature.models.Post;
 import com.revature.models.Role;
 import com.revature.models.User;
-import com.revature.repos.CommentRepository;
 import com.revature.repos.PostRepository;
-import com.revature.services.CommentService;
 import com.revature.services.PostService;
 
 @SpringBootTest
@@ -67,15 +64,29 @@ public class PostServiceTest {
 		List<Post> posts = new ArrayList<Post>();
 		List<Comment> comments = new ArrayList<Comment>();
 		User userNurse = new User("1", "Name", "Last", "Email", new Role(1, "nurse"));
-		Post post = new Post(1, "This is the title", "This is a description", LocalDateTime.now(), comments, userNurse);
+		Post post = new Post(1, "Title", "This is a description", LocalDateTime.now(), comments, userNurse);
 		Comment comment = new Comment(100, "This is a comment", LocalDateTime.now(), userNurse, post);
 		comments.add(comment);
 		posts.add(post);
 		when(postRepository.getById(1)).thenReturn(post);
 		Post p1 = postService.findPostById(1);
 		assertEquals("This is a description", p1.getDescription());
-}
+	}
+	
+	@Test
+	public void addPostTest() {
+		List<Post> posts = new ArrayList<Post>();
+		List<Comment> comments = new ArrayList<Comment>();
+		User userDoctor = new User("1", "Name", "Last", "Email", new Role(1, "doctor"));
+		Post post = new Post(1, "This is the title", "This is a description", LocalDateTime.now(), comments, userDoctor);
+		Comment comment = new Comment(200, "This is a comment", LocalDateTime.now(), userDoctor, post);
+		comments.add(comment);
+		posts.add(post);
 
+		postService.addPost(post);
+		verify(postRepository, times(1)).save(post);
+	}
+	
 	@Test
 	public void updatePostTest() {
 		List<Post> posts = new ArrayList<Post>();
